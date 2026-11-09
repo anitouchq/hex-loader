@@ -1,4 +1,6 @@
-# 🔎 Hex Loader — Go + Fyne → GitHub Releases
+# hex-loader
+
+[![CI](https://github.com/anitouchq/hex-loader/actions/workflows/ci.yml/badge.svg)](https://github.com/anitouchq/hex-loader/actions)
 
 Учебное GUI-приложение на Go и Fyne для открытия и проверки файлов Intel HEX. Приложение проверяет структуру записей, количество байтов, контрольные суммы и обязательную EOF-запись.
 
@@ -6,10 +8,10 @@
 
 - Открытие файлов через системный диалог.
 - Проверка префикса и длины каждой записи.
-- Проверка Intel HEX checksum.
+- Проверка контрольной суммы Intel HEX.
 - Обработка Data, EOF, Extended Segment Address, Extended Linear Address и Start Address records.
 - Отображение количества записей и байтов данных.
-- Понятное сообщение об ошибке с номером строки.
+- Сообщение об ошибке с номером строки.
 
 Приложение проверяет файл, но не прошивает микроконтроллер и не заменяет программатор.
 
@@ -18,9 +20,9 @@
 - `gofmt` — форматирование;
 - `go vet ./...` — статический анализ;
 - `go test ./... -v` — тесты парсера;
-- `go build` — сборка GUI.
+- `go build` — проверочная сборка GUI.
 
-Fyne использует CGO и системные графические библиотеки. Поэтому Release собирается на нативных runner'ах Linux, macOS и Windows.
+Fyne использует CGO и системные графические библиотеки, поэтому Release собирается на нативных runner'ах Linux, macOS и Windows.
 
 ## Release artifacts
 
@@ -30,22 +32,40 @@ Fyne использует CGO и системные графические би�
 | macOS | `hex-loader-macos` |
 | Windows x64 | `hex-loader-windows-x64.exe` |
 
-Чтобы создать Release, отправьте тег:
+Чтобы запустить публикацию, отправьте тег версии:
 
 ```bash
 git tag v1.0.0
 git push origin v1.0.0
 ```
 
+Бинарники будут опубликованы в [GitHub Releases](https://github.com/anitouchq/hex-loader/releases).
+
 ## Локальный запуск
 
-Требуется Go 1.27+, GCC и графические библиотеки Fyne. Для Ubuntu/Debian:
+Требуются Go 1.27+, GCC и графические библиотеки Fyne. Для Ubuntu/Debian:
 
 ```bash
 sudo apt-get install gcc libgl1-mesa-dev xorg-dev libwayland-dev libxkbcommon-dev
-go mod tidy
 go test ./... -v
 go run .
 ```
+
+## Структура проекта
+
+| Файл или каталог | Назначение |
+|---|---|
+| `.github/workflows/ci.yml` | Проверки, нативная сборка под три ОС и публикация Release |
+| `main.go` | Запуск GUI и взаимодействие с пользователем |
+| `hex.go` | Разбор и проверка записей Intel HEX |
+| `hex_test.go` | Тесты корректных и ошибочных HEX-файлов |
+| `go.mod` | Имя Go-модуля и прямые зависимости |
+| `go.sum` | Контрольные суммы модулей |
+| `.gitignore` | Локальные файлы, исключаемые из Git |
+
+## Результаты
+
+- [GitHub Actions](https://github.com/anitouchq/hex-loader/actions)
+- [Опубликованные релизы](https://github.com/anitouchq/hex-loader/releases)
 
 [Главный каталог CI/CD проектов](https://github.com/anitouchq/CI-CD-Pipelines)
