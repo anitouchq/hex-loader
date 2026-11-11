@@ -57,7 +57,7 @@ jobs:
           - os: ubuntu-latest
             platform: linux-x64
             artifact: hex-loader-linux-x64
-          - os: macos-14
+          - os: macos-latest
             platform: macos
             artifact: hex-loader-macos
           - os: windows-latest
