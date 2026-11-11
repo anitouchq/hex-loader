@@ -53,7 +53,6 @@ jobs:
     if: startsWith(github.ref, 'refs/tags/v') || github.event_name == 'workflow_dispatch'
     needs: test
     runs-on: ${{ matrix.os }}
-    continue-on-error: ${{ matrix.platform == 'macos' }}
     permissions:
       contents: read
     strategy:
@@ -63,9 +62,6 @@ jobs:
           - os: ubuntu-latest
             platform: linux-x64
             artifact: hex-loader-linux-x64
-          - os: macos-latest
-            platform: macos
-            artifact: hex-loader-macos
           - os: windows-latest
             platform: windows-x64
             artifact: hex-loader-windows-x64.exe
@@ -128,10 +124,39 @@ jobs:
           if-no-files-found: error
           retention-days: 1
 
+  build-macos:
+    name: Build macOS (optional)
+    if: startsWith(github.ref, 'refs/tags/v') || github.event_name == 'workflow_dispatch'
+    needs: test
+    runs-on: macos-latest
+    continue-on-error: true
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.27.0'
+          cache: true
+      - name: Build macOS binary
+        env:
+          CGO_ENABLED: '1'
+          VERSION: ${{ inputs.release_tag || github.ref_name }}
+        run: go build -trimpath -ldflags="-s -w -X main.version=$VERSION" -o hex-loader-macos .
+      - name: Upload macOS binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-macos
+          path: hex-loader-macos
+          if-no-files-found: error
+          retention-days: 1
+
   release:
     name: Publish GitHub Release
     if: startsWith(github.ref, 'refs/tags/v') || github.event_name == 'workflow_dispatch'
-    needs: build
+    needs: [build, build-macos]
+    if: always() && needs.build.result == 'success' && (startsWith(github.ref, 'refs/tags/v') || github.event_name == 'workflow_dispatch')
     runs-on: ubuntu-latest
     permissions:
       contents: write
