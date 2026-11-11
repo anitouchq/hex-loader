@@ -69,17 +69,17 @@ go run .
 - [Опубликованные релизы](https://github.com/anitouchq/hex-loader/releases)
 
 
-## Скриншоты
+## 📸 Скриншоты
 
-### Окно приложения с открытым Intel HEX файлом
+### 1. Работающее приложение
 
-![Окно приложения с открытым Intel HEX файлом](screenshots/application.png)
+![Окно Hex Loader с открытым Intel HEX файлом](screenshots/application.png)
 
-### Успешная матричная сборка
+### 2. GitHub Actions — успешный CI/CD
 
-![Успешная матричная сборка](screenshots/github-actions-release.png)
+![GitHub Actions — успешная сборка](screenshots/github-actions-release.png)
 
-### GitHub Release с бинарными файлами
+### 3. GitHub Release v1.0.4 — 3 бинарника
 
 ![GitHub Release с бинарными файлами](screenshots/github-release.png)
 
