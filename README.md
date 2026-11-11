@@ -68,4 +68,19 @@ go run .
 - [GitHub Actions](https://github.com/anitouchq/hex-loader/actions)
 - [Опубликованные релизы](https://github.com/anitouchq/hex-loader/releases)
 
+
+## Скриншоты
+
+### Окно приложения с открытым Intel HEX файлом
+
+![Окно приложения с открытым Intel HEX файлом](screenshots/application.png)
+
+### Успешная матричная сборка
+
+![Успешная матричная сборка](screenshots/github-actions-release.png)
+
+### GitHub Release с бинарными файлами
+
+![GitHub Release с бинарными файлами](screenshots/github-release.png)
+
 [Главный каталог CI/CD проектов](https://github.com/anitouchq/CI-CD-Pipelines)
